@@ -1,0 +1,28 @@
+---
+abstract: 'build full-screen console-style applications'
+author:
+  - 'Paul Evans <leonerd@leonerd.org.uk>'
+build_requires:
+  Test::Identity: 0
+  Test::More: 0
+dynamic_config: 1
+generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112621'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Tickit-Console
+provides:
+  Tickit::Console:
+    file: lib/Tickit/Console.pm
+    version: 0.01
+  Tickit::Console::Tab:
+    file: lib/Tickit/Console.pm
+    version: 0
+requires:
+  Tickit: 0
+  Tickit::Widget::Scroller: 0
+  Tickit::Widget::Tabbed: 0.003
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01

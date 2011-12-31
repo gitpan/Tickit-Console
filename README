@@ -1,0 +1,52 @@
+NAME
+    `Tickit::Console' - build full-screen console-style applications
+
+CONSTRUCTOR
+  $console = Tickit::Console->new( %args )
+    Returns a new instance of a `Tickit::Console'. Takes the following named
+    arguments:
+
+    on_line => CODE
+            Callback to invoke when a line of text is entered in the entry
+            widget.
+
+             $on_line->( $console, $text )
+
+METHODS
+  $tab = $console->add_tab( %args )
+    Adds a new tab to the console, and returns an object representing it.
+
+    Takes the following named arguments:
+
+    name => STRING
+            Name for the tab.
+
+    on_line => CODE
+            Optional. Provides a different callback to invoke when a line of
+            text is entered while this tab is active. Invoked the same way
+            as above.
+
+    See TAB OBJECTS below for more information about the returned object.
+
+  $index = $console->active_tab_index
+  $tab = $console->active_tab
+  $console->activate_tab( $tab_or_index )
+  $console->next_tab
+  $console->prev_tab
+    These methods are all passed through to the underlying
+    Tickit::Widget::Tabbed object.
+
+TAB OBJECTS
+  $name = $tab->name
+  $tab->set_name( $name )
+    Returns or sets the tab name text
+
+  $tab->add_line( $string, %opts )
+    Appends a line of text to the tab. `$string' may either be a plain perl
+    string, or an instance of String::Tagged containing formatting tags, as
+    specified by Tickit::Widget::Scroller. Options will be passed to the
+    Tickit::Widget::Scroller::Item::Line used to contain the string.
+
+AUTHOR
+    Paul Evans <leonerd@leonerd.org.uk>
+

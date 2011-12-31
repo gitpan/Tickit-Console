@@ -1,0 +1,15 @@
+Build.PL
+Changes
+examples/demo.pl
+lib/Tickit/Console.pm
+MANIFEST			This list of files
+t/00use.t
+t/01basic.t
+t/02tabs.t
+t/03input.t
+t/99pod.t
+Makefile.PL
+README
+LICENSE
+META.yml
+META.json
