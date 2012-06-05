@@ -1,7 +1,7 @@
 #  You may distribute under the terms of either the GNU General Public License
 #  or the Artistic License (the same terms as Perl itself)
 #
-#  (C) Paul Evans, 2011 -- leonerd@leonerd.org.uk
+#  (C) Paul Evans, 2011-2012 -- leonerd@leonerd.org.uk
 
 package Tickit::Console;
 
@@ -9,10 +9,10 @@ use strict;
 use warnings;
 use base qw( Tickit::Widget::VBox );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Tickit::Widget::Entry;
-use Tickit::Widget::Scroller;
+use Tickit::Widget::Scroller 0.04;
 use Tickit::Widget::Tabbed 0.003;
 
 use Scalar::Util qw( weaken );
@@ -116,7 +116,10 @@ sub add_tab
    my $self = shift;
    my %args = @_;
 
-   my $tab = $self->{tabbed}->add_tab( Tickit::Widget::Scroller->new, label => $args{name} );
+   my $tab = $self->{tabbed}->add_tab(
+      Tickit::Widget::Scroller->new( gravity => "bottom" ),
+      label => $args{name}
+   );
 
    $tab->{on_line} = delete $args{on_line};
 

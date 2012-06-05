@@ -6,6 +6,7 @@ use Tickit::Async;
 use Tickit::Console;
 
 use IO::Async::Loop;
+use IO::Async::Timer::Periodic;
 use String::Tagged;
 
 my $loop = IO::Async::Loop->new();
@@ -14,15 +15,14 @@ my $globaltab;
 my $warntab;
 
 my $timercount = 0;
-my $timerid;
-
-sub timerfunc
-{
-   $globaltab->add_line( "<TIMER>: Hello $timercount", indent => 9 );
-   $timercount++;
-
-   $timerid = $loop->enqueue_timer( delay => 1, code => \&timerfunc );
-}
+my $timer = IO::Async::Timer::Periodic->new(
+   interval => 1,
+   on_tick => sub {
+      $globaltab->add_line( "<TIMER>: Hello $timercount", indent => 9 );
+      $timercount++;
+   }
+);
+$loop->add( $timer );
 
 my $console = Tickit::Console->new(
    on_line => sub {
@@ -33,13 +33,11 @@ my $console = Tickit::Console->new(
          return;
       }
       elsif( $line eq "start" ) {
-         $loop->cancel_timer( $timerid ) if defined $timerid;
          $timercount = 0;
-         timerfunc();
+         $timer->start;
       }
       elsif( $line eq "stop" ) {
-         $loop->cancel_timer( $timerid ) if defined $timerid;
-         undef $timerid;
+         $timer->stop;
       }
       else {
          $globaltab->add_line( "<INPUT>: $line", indent => 9 );

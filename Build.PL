@@ -7,7 +7,7 @@ my $build = Module::Build->new(
    module_name => 'Tickit::Console',
    requires => {
       'Tickit' => 0,
-      'Tickit::Widget::Scroller' => 0,
+      'Tickit::Widget::Scroller' => '0.04',
       'Tickit::Widget::Tabbed' => '0.003',
    },
    build_requires => {

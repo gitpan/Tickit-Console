@@ -1,4 +1,7 @@
 Revision history for Tickit-Console
 
+0.02    CHANGES:
+         * Use new bottom-gravity behaviour of Tickit::Widget::Scroller 0.04
+
 0.01    First version, released on an unsuspecting world.
 

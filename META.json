@@ -4,7 +4,7 @@
       "Paul Evans <leonerd@leonerd.org.uk>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112621",
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.120630",
    "license" : [
       "perl_5"
    ],
@@ -16,14 +16,14 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Test::Identity" : 0,
-            "Test::More" : 0
+            "Test::Identity" : "0",
+            "Test::More" : "0"
          }
       },
       "runtime" : {
          "requires" : {
-            "Tickit" : 0,
-            "Tickit::Widget::Scroller" : 0,
+            "Tickit" : "0",
+            "Tickit::Widget::Scroller" : "0.04",
             "Tickit::Widget::Tabbed" : "0.003"
          }
       }
@@ -31,7 +31,7 @@
    "provides" : {
       "Tickit::Console" : {
          "file" : "lib/Tickit/Console.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       },
       "Tickit::Console::Tab" : {
          "file" : "lib/Tickit/Console.pm",
@@ -44,5 +44,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.01"
+   "version" : "0.02"
 }
