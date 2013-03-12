@@ -14,13 +14,29 @@ my $loop = IO::Async::Loop->new();
 my $globaltab;
 my $warntab;
 
+my $counter = 1;
+sub add_a_line
+{
+   my $text = String::Tagged->new( "<Rand>: Line $counter " );
+   $counter++;
+
+   for ( 0 .. rand( 30 ) + 3 ) {
+      $text->append_tagged( chr( rand( 26 ) + 0x40 ) x ( rand( 10 ) + 5 ),
+                            fg => int( rand( 7 ) + 1 ),
+                            b  => rand > 0.8,
+                            u  => rand > 0.8,
+                            i  => rand > 0.8,
+                          );
+      $text->append( " " );
+   }
+
+   $globaltab->add_line( $text, indent => 8 );
+}
+
 my $timercount = 0;
 my $timer = IO::Async::Timer::Periodic->new(
    interval => 1,
-   on_tick => sub {
-      $globaltab->add_line( "<TIMER>: Hello $timercount", indent => 9 );
-      $timercount++;
-   }
+   on_tick => \&add_a_line,
 );
 $loop->add( $timer );
 
@@ -72,22 +88,7 @@ $loop->add( $tickit );
 $tickit->set_root_widget( $console );
 
 # Create some inital content so the tab has something interesting to scroll around
-for ( 1 .. 50 ) {
-   my $text = String::Tagged->new( "<Rand>: " );
-   my %pen = (
-   );
-   for ( 0 .. rand( 30 ) + 3 ) {
-      $text->append_tagged( chr( rand( 26 ) + 0x40 ) x ( rand( 10 ) + 5 ),
-                            fg => int( rand( 7 ) + 1 ),
-                            b  => rand > 0.8,
-                            u  => rand > 0.8,
-                            i  => rand > 0.8,
-                          );
-      $text->append( " " );
-   }
-
-   $globaltab->add_line( $text, indent => 8 );
-}
+add_a_line for 1 .. 50;
 
 eval { $tickit->run };
 

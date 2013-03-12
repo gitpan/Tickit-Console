@@ -1,5 +1,9 @@
 Revision history for Tickit-Console
 
+0.03    CHANGES:
+         * Updated unit tests for visual style of Tickit::Widget:Tabbed 0.005
+         * Make sure to declare dependency on Tickit::Widget::Entry
+
 0.02    CHANGES:
          * Use new bottom-gravity behaviour of Tickit::Widget::Scroller 0.04
 

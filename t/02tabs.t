@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
-use Test::More tests => 11;
+use Test::More;
 use Test::Identity;
 
 use Tickit::Test;
@@ -20,7 +21,7 @@ my @tabs = map { $console->add_tab( name => $_ ) } qw( Tab0 Tab1 Tab2 );
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Tab0",fg=>14,bg=>4),TEXT(" Tab1 Tab2 ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tab0",fg=>14,bg=>4),TEXT("]Tab1 Tab2 ",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after ->add_tab' );
 
@@ -39,7 +40,7 @@ is( $tabs[0]->name, "Newname", '$tab[0]->name after ->set_name' );
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Newname",fg=>14,bg=>4),TEXT(" Tab1 Tab2 ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Newname",fg=>14,bg=>4),TEXT("]Tab1 Tab2 ",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after $tab->set_name' );
 
@@ -51,6 +52,8 @@ identical( $console->active_tab, $tabs[1], '$console->active_tab after ->activat
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Newname ",fg=>7,bg=>4),TEXT("Tab1",fg=>14,bg=>4),TEXT(" Tab2 ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT(" Newname[",fg=>7,bg=>4),TEXT("Tab1",fg=>14,bg=>4),TEXT("]Tab2 ",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after ->activate_tab' );
+
+done_testing;

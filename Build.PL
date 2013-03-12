@@ -7,12 +7,13 @@ my $build = Module::Build->new(
    module_name => 'Tickit::Console',
    requires => {
       'Tickit' => 0,
+      'Tickit::Widget::Entry' => 0,
       'Tickit::Widget::Scroller' => '0.04',
-      'Tickit::Widget::Tabbed' => '0.003',
+      'Tickit::Widget::Tabbed' => '0.005',
    },
    build_requires => {
       'Test::Identity' => 0,
-      'Test::More' => 0,
+      'Test::More' => '0.88', # done_testing
    },
    auto_configure_requires => 0, # Don't add M::B to configure_requires
    license => 'perl',

@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
-use Test::More tests => 11;
+use Test::More;
 
 use Tickit::Test;
 
@@ -24,7 +25,7 @@ my $tab = $console->add_tab( name => "Tab" );
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Tab",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tab",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display initially' );
 
@@ -35,7 +36,7 @@ presskey( text => $_ ) for split //, "Hello";
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Tab",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tab",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               [TEXT("Hello"),TEXT("")] ],
             'Display after "Hello"' );
 
@@ -48,7 +49,7 @@ presskey( key => "Enter" );
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Tab",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tab",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after Enter' );
 
@@ -69,7 +70,7 @@ $console->activate_tab( $special_tab );
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Tab ",fg=>7,bg=>4),TEXT("Tab2",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT(" Tab[",fg=>7,bg=>4),TEXT("Tab2",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after ->add_tab special' );
 
@@ -78,3 +79,5 @@ presskey( key => "Enter" );
 
 is_deeply( \@lines, [], '@lines empty after entry on special tab' );
 is_deeply( \@special_lines, [ "Another" ], '@special_lines after entry on special tab' );
+
+done_testing;

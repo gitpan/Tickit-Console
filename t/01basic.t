@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
 use strict;
+use warnings;
 
-use Test::More tests => 12;
+use Test::More;
 use Test::Refcount;
 
 use Tickit::Test;
@@ -46,7 +47,7 @@ my $tab = $console->add_tab( name => "Tabname" );
 flush_tickit;
 
 is_display( [ BLANKLINES(23),
-              [TEXT("Tabname",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after ->add_tab' );
 
@@ -58,7 +59,7 @@ flush_tickit;
 
 is_display( [ [TEXT("A line of content")],
               BLANKLINES(22),
-              [TEXT("Tabname",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after tab->add_line' );
 
@@ -75,7 +76,7 @@ flush_tickit;
 is_display( [ [TEXT("A line of content")],
               [TEXT("Content",b=>1),TEXT(" with "),TEXT("formatting",u=>1),TEXT(" in it")],
               BLANKLINES(21),
-              [TEXT("Tabname",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after tab->add_line tagged' );
 
@@ -88,8 +89,10 @@ is_display( [ [TEXT("A line of content")],
               [TEXT("XXXX " x 16)],
               [TEXT("    "),TEXT("XXXX " x 4),TEXT("")],
               BLANKLINES(19),
-              [TEXT("Tabname",fg=>14,bg=>4),TEXT(" ",fg=>7,bg=>4),TEXT("",bg=>4)],
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
             'Display after tab->add_line with indent' );
 
 is_oneref( $console, '$console has refcount 1 at EOF' );
+
+done_testing;
