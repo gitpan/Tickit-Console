@@ -24,9 +24,7 @@ $console->set_window( $win );
 
 flush_tickit;
 
-is_termlog( [ SETPEN,
-              CLEAR,
-              GOTO(23,0),
+is_termlog( [ GOTO(23,0),
               SETBG(4),
               ERASECH(80),
               GOTO(24,0),

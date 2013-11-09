@@ -1,6 +1,7 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 use strict;
+use warnings;
 
 use Tickit::Async;
 use Tickit::Console;
@@ -45,8 +46,7 @@ my $console = Tickit::Console->new(
       my ( $self, $line ) = @_;
 
       if( $line eq "quit" ) {
-         $loop->loop_stop();
-         return;
+         $loop->stop;
       }
       elsif( $line eq "start" ) {
          $timercount = 0;

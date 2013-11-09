@@ -6,7 +6,7 @@ build_requires:
   Test::Identity: 0
   Test::More: 0.88
 dynamic_config: 1
-generated_by: 'Module::Build version 0.4001, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Module::Build version 0.4007, CPAN::Meta::Converter version 2.132830'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -15,10 +15,9 @@ name: Tickit-Console
 provides:
   Tickit::Console:
     file: lib/Tickit/Console.pm
-    version: 0.03
+    version: 0.04
   Tickit::Console::Tab:
     file: lib/Tickit/Console.pm
-    version: 0
 requires:
   Tickit: 0
   Tickit::Widget::Entry: 0
@@ -26,4 +25,4 @@ requires:
   Tickit::Widget::Tabbed: 0.005
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.03
+version: 0.04

@@ -1,6 +1,7 @@
 Build.PL
 Changes
 examples/demo.pl
+examples/netcat.pl
 lib/Tickit/Console.pm
 LICENSE
 Makefile.PL

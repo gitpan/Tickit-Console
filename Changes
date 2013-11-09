@@ -1,5 +1,12 @@
 Revision history for Tickit-Console
 
+0.04    2013/11/09 16:49:48
+        [CHANGES]
+         * Added a simple netcat-like client example
+
+        [BUGFIXES]
+         * Fix unit test termlog expectations for recent Tickit changes
+
 0.03    CHANGES:
          * Updated unit tests for visual style of Tickit::Widget:Tabbed 0.005
          * Make sure to declare dependency on Tickit::Widget::Entry
