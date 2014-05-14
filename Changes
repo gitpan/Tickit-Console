@@ -1,5 +1,10 @@
 Revision history for Tickit-Console
 
+0.05    2014/05/14 16:51:29
+        [BUGFIXES]
+         * Fix t/01basic.t for the fact that a window clear operation now
+           happens first
+
 0.04    2013/11/09 16:49:48
         [CHANGES]
          * Added a simple netcat-like client example

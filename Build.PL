@@ -7,9 +7,10 @@ my $build = Module::Build->new(
    module_name => 'Tickit::Console',
    requires => {
       'Tickit' => 0,
+      'Tickit::Window' => '0.45', # rendering order
       'Tickit::Widget::Entry' => 0,
       'Tickit::Widget::Scroller' => '0.04',
-      'Tickit::Widget::Tabbed' => '0.005',
+      'Tickit::Widget::Tabbed' => '0.015', # rendering order
    },
    build_requires => {
       'Test::Identity' => 0,
