@@ -13,4 +13,6 @@ t/00use.t
 t/01basic.t
 t/02tabs.t
 t/03input.t
+t/04make_widget.t
+t/05bind_key.t
 t/99pod.t

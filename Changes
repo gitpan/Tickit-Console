@@ -1,5 +1,14 @@
 Revision history for Tickit-Console
 
+0.06    2014/08/16 21:00:11
+        [CHANGES]
+         * Allow ->add_tab with a make_widget CODEref to create a tab with a
+           custom internal layout
+         * Proxy for ->remove_tab and ->move_tab
+         * Pass active tab into 'on_line' callbacks on them, rather than the
+           main console object
+         * Added ->bind_key at the console and tab level
+
 0.05    2014/05/14 16:51:29
         [BUGFIXES]
          * Fix t/01basic.t for the fact that a window clear operation now

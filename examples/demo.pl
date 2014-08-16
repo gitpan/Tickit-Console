@@ -5,6 +5,7 @@ use warnings;
 
 use Tickit::Async;
 use Tickit::Console;
+use Tickit::Widgets qw( Frame );
 
 use IO::Async::Loop;
 use IO::Async::Timer::Periodic;
@@ -81,6 +82,22 @@ $SIG{__WARN__} = sub {
    return unless defined $warntab;
    $warntab->add_line( "WARN: $_[0]", 6 );
 };
+
+my $framedtab = $console->add_tab(
+   name => "FRAME",
+   make_widget => sub {
+      my ( $scroller ) = @_;
+
+      return Tickit::Widget::Frame->new(
+         child => $scroller,
+         style => { linetype => "single" },
+         title => "The scroller",
+      )
+   },
+);
+
+# Lines of content for the frame
+$framedtab->add_line( $_ ) for qw( Content for the frame );
 
 my $tickit = Tickit::Async->new;
 $loop->add( $tickit );

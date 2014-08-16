@@ -4,16 +4,19 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Identity;
 
 use Tickit::Test;
 
 use Tickit::Console;
 
-my ( $term, $win ) = mk_term_and_window;
+my $win = mk_window;
 
+my $on_line_invocant;
 my @lines;
 my $console = Tickit::Console->new(
    on_line => sub {
+      $on_line_invocant = $_[0];
       push @lines, $_[1];
    },
 );
@@ -55,6 +58,7 @@ is_display( [ BLANKLINES(23),
 
 is_cursorpos( 24, 0, 'Cursor after Enter' );
 
+identical( $on_line_invocant, $tab, 'on_line invocant is $tab' );
 is_deeply( \@lines, [ "Hello" ], '@lines after Enter' );
 
 my @special_lines;

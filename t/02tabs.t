@@ -10,7 +10,7 @@ use Tickit::Test;
 
 use Tickit::Console;
 
-my ( $term, $win ) = mk_term_and_window;
+my $win = mk_window;
 
 my $console = Tickit::Console->new;
 
