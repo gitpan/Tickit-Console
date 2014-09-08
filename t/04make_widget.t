@@ -43,9 +43,9 @@ is_display( [ [TEXT("Left"), BLANK(71), TEXT("Right")],
               BLANKLINE() ],
             'Display initially with make_widget' );
 
-$tab->add_line( "One" );
-$tab->add_line( "Two" );
-$tab->add_line( "Three" );
+$tab->append_line( "One" );
+$tab->append_line( "Two" );
+$tab->append_line( "Three" );
 flush_tickit;
 
 is_display( [ [TEXT("Left"), BLANK(2), TEXT("One"), BLANK(66), TEXT("Right")],
@@ -54,6 +54,6 @@ is_display( [ [TEXT("Left"), BLANK(2), TEXT("One"), BLANK(66), TEXT("Right")],
               BLANKLINES(20),
               [TEXT("[",fg=>7,bg=>4), TEXT("Silly",fg=>14,bg=>4), TEXT("]",fg=>7,bg=>4), BLANK(73,bg=>4)],
               BLANKLINE() ],
-            'Display after ->add_line on tab with custom widget' );
+            'Display after ->append_line on tab with custom widget' );
 
 done_testing;

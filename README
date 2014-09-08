@@ -26,9 +26,20 @@ CONSTRUCTOR
 
              $on_line->( $active_tab, $text )
 
+    tab_class => STRING
+            Optional. If set, gives a class name (which should be a subclass
+            of Tickit::Console::Tab) to construct newly-added tabs with.
+            This setting allows an application to provide new methods in
+            tabs to change behaviours.
+
+    timestamp_format, datestamp_format
+            Optional. If supplied, these will be stored as default values to
+            pass to the tab constructor in the `add_tab' method.
+
 METHODS
   $tab = $console->add_tab( %args )
-    Adds a new tab to the console, and returns an object representing it.
+    Adds a new tab to the console, and returns a Tickit::Console::Tab object
+    representing it.
 
     Takes the following named arguments:
 
@@ -52,7 +63,7 @@ METHODS
 
              $tab_widget = $make_widget->( $scroller )
 
-    See TAB OBJECTS below for more information about the returned object.
+    Any other named arguments are passed to the tab's constructor.
 
   $index = $console->active_tab_index
   $tab = $console->active_tab
@@ -71,30 +82,6 @@ METHODS
      $code->( $console, $key )
 
     If `$code' is missing or `undef', any existing callback is removed.
-
-TAB OBJECTS
-  $name = $tab->name
-  $tab->set_name( $name )
-    Returns or sets the tab name text
-
-  $tab->add_line( $string, %opts )
-    Appends a line of text to the tab. `$string' may either be a plain perl
-    string, or an instance of String::Tagged containing formatting tags, as
-    specified by Tickit::Widget::Scroller. Options will be passed to the
-    Tickit::Widget::Scroller::Item::Line used to contain the string.
-
-  $tab->bind_key( $key, $code )
-    Installs a callback to invoke if the given key is pressed while this tab
-    has focus, overwriting any previous callback for the same key. The code
-    block is invoked as
-
-     $result = $code->( $tab, $key )
-
-    If `$code' is missing or `undef', any existing callback is removed.
-
-    This callback will be invoked before one defined on the console object
-    itself, if present. If it returns a false value, then the one on the
-    console will be invoked instead.
 
 AUTHOR
     Paul Evans <leonerd@leonerd.org.uk>

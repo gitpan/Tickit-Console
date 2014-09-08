@@ -1,5 +1,14 @@
 Revision history for Tickit-Console
 
+0.07    2014/09/08 19:30:44
+        [CHANGES]
+         * Added ->prepend_line, allowing pre-history text to be inserted at
+           the top of a scroller
+         * Split out Tickit::Console::Tab into its own file
+         * Allow applications to specify a custom tab class
+         * Support management of timestamps and datestamps in scroller history
+         * Renamed ->add_line to ->append_line
+
 0.06    2014/08/16 21:00:11
         [CHANGES]
          * Allow ->add_tab with a make_widget CODEref to create a tab with a

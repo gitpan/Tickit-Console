@@ -54,7 +54,7 @@ is_display( [ BLANKLINES(23),
 
 is_cursorpos( 24, 0, 'Cursor position after ->add_tab' );
 
-$tab->add_line( "A line of content" );
+$tab->append_line( "A line of content" );
 
 flush_tickit;
 
@@ -62,15 +62,15 @@ is_display( [ [TEXT("A line of content")],
               BLANKLINES(22),
               [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
-            'Display after tab->add_line' );
+            'Display after tab->append_line' );
 
-is_cursorpos( 24, 0, 'Cursor position after tab->add_line' );
+is_cursorpos( 24, 0, 'Cursor position after tab->append_line' );
 
 my $text = String::Tagged->new( "Content with formatting in it" );
 $text->apply_tag(  0,  7, b => 1 );
 $text->apply_tag( 13, 10, u => 1 );
 
-$tab->add_line( $text );
+$tab->append_line( $text );
 
 flush_tickit;
 
@@ -79,9 +79,9 @@ is_display( [ [TEXT("A line of content")],
               BLANKLINES(21),
               [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
-            'Display after tab->add_line tagged' );
+            'Display after tab->append_line tagged' );
 
-$tab->add_line( "XXXX " x 20, indent => 4 );
+$tab->append_line( "XXXX " x 20, indent => 4 );
 
 flush_tickit;
 
@@ -92,7 +92,21 @@ is_display( [ [TEXT("A line of content")],
               BLANKLINES(19),
               [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
               BLANKLINE() ],
-            'Display after tab->add_line with indent' );
+            'Display after tab->append_line with indent' );
+
+$tab->prepend_line( "This line first" );
+
+flush_tickit;
+
+is_display( [ [TEXT("This line first")],
+              [TEXT("A line of content")],
+              [TEXT("Content",b=>1),TEXT(" with "),TEXT("formatting",u=>1),TEXT(" in it")],
+              [TEXT("XXXX " x 16)],
+              [TEXT("    "),TEXT("XXXX " x 4),TEXT("")],
+              BLANKLINES(18),
+              [TEXT("[",fg=>7,bg=>4),TEXT("Tabname",fg=>14,bg=>4),TEXT("]",fg=>7,bg=>4),TEXT("",bg=>4)],
+              BLANKLINE() ],
+            'Display after tab->prepend_line' );
 
 is_oneref( $console, '$console has refcount 1 at EOF' );
 

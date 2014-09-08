@@ -91,7 +91,10 @@ my $console = Tickit::Console->new(
    },
 );
 
-$tab = $console->add_tab( name => "netcat" );
+$tab = $console->add_tab(
+   name => "netcat",
+   timestamp_format => "[%H:%M:%S] ",
+);
 
 $loop->resolver->getnameinfo(
    addr => $stream->read_handle->peername,

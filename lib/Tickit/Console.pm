@@ -7,13 +7,16 @@ package Tickit::Console;
 
 use strict;
 use warnings;
+use 5.010; # //
 use base qw( Tickit::Widget::VBox );
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use Tickit::Widget::Entry;
 use Tickit::Widget::Scroller 0.04;
 use Tickit::Widget::Tabbed 0.003;
+
+use Tickit::Console::Tab;
 
 use Scalar::Util qw( weaken );
 
@@ -56,6 +59,17 @@ Callback to invoke when a line of text is entered in the entry widget.
 
  $on_line->( $active_tab, $text )
 
+=item tab_class => STRING
+
+Optional. If set, gives a class name (which should be a subclass of
+L<Tickit::Console::Tab>) to construct newly-added tabs with. This setting
+allows an application to provide new methods in tabs to change behaviours.
+
+=item timestamp_format, datestamp_format
+
+Optional. If supplied, these will be stored as default values to pass to the
+tab constructor in the C<add_tab> method.
+
 =back
 
 =cut
@@ -67,12 +81,18 @@ sub new
 
    my $on_line = delete $args{on_line};
 
+   my %default_tab_opts;
+   $default_tab_opts{$_} = delete $args{$_} for
+      qw( timestamp_format datestamp_format );
+
    my $self = $class->SUPER::new( %args );
+
+   $self->{default_tab_opts} = \%default_tab_opts;
 
    $self->add(
       $self->{tabbed} = Tickit::Widget::Tabbed->new(
          tab_position => "bottom",
-         tab_class    => "Tickit::Console::Tab",
+         tab_class    => $args{tab_class} // "Tickit::Console::Tab",
       ),
       expand => 1,
    );
@@ -106,7 +126,8 @@ sub new
 
 =head2 $tab = $console->add_tab( %args )
 
-Adds a new tab to the console, and returns an object representing it.
+Adds a new tab to the console, and returns a L<Tickit::Console::Tab> object
+representing it.
 
 Takes the following named arguments:
 
@@ -134,7 +155,7 @@ along with other widgets, or various other effects.
 
 =back
 
-See L</TAB OBJECTS> below for more information about the returned object.
+Any other named arguments are passed to the tab's constructor.
 
 =cut
 
@@ -143,7 +164,8 @@ sub add_tab
    my $self = shift;
    my %args = @_;
 
-   my $make_widget = $args{make_widget};
+   my $make_widget = delete $args{make_widget};
+   my $on_line     = delete $args{on_line};
 
    my $scroller = Tickit::Widget::Scroller->new( gravity => "bottom" );
 
@@ -151,10 +173,12 @@ sub add_tab
 
    my $tab = $self->{tabbed}->add_tab(
       $widget,
-      label => $args{name}
+      label => delete $args{name},
+      %{ $self->{default_tab_opts} },
+      %args,
    );
 
-   $tab->{on_line} = delete $args{on_line};
+   $tab->{on_line} = $on_line;
 
    # Cheating
    $tab->{scroller} = $scroller;
@@ -242,99 +266,6 @@ sub _on_key
 
    my $code = $self->{keybindings}{$key}[0] or return 0;
    return $code->( $self, $key );
-}
-
-=head1 TAB OBJECTS
-
-=cut
-
-package Tickit::Console::Tab;
-use base qw( Tickit::Widget::Tabbed::Tab );
-
-our $VERSION = '0.06';
-
-use Tickit::Widget::Scroller::Item::Text;
-use Tickit::Widget::Scroller::Item::RichText;
-
-=head2 $name = $tab->name
-
-=head2 $tab->set_name( $name )
-
-Returns or sets the tab name text
-
-=cut
-
-sub name
-{
-   my $self = shift;
-   return $self->label;
-}
-
-sub set_name
-{
-   my $self = shift;
-   my ( $name ) = @_;
-   $self->set_label( $name );
-}
-
-=head2 $tab->add_line( $string, %opts )
-
-Appends a line of text to the tab. C<$string> may either be a plain perl
-string, or an instance of L<String::Tagged> containing formatting tags, as
-specified by L<Tickit::Widget::Scroller>. Options will be passed to the
-L<Tickit::Widget::Scroller::Item::Line> used to contain the string.
-
-=cut
-
-sub add_line
-{
-   my $self = shift;
-   my ( $string, %opts ) = @_;
-
-   my $item;
-   if( eval { $string->isa( "String::Tagged" ) } ) {
-      $item = Tickit::Widget::Scroller::Item::RichText->new( $string, %opts );
-   }
-   else {
-      $item = Tickit::Widget::Scroller::Item::Text->new( $string, %opts );
-   }
-
-   $self->{scroller}->push( $item );
-}
-
-=head2 $tab->bind_key( $key, $code )
-
-Installs a callback to invoke if the given key is pressed while this tab has
-focus, overwriting any previous callback for the same key. The code block is
-invoked as
-
- $result = $code->( $tab, $key )
-
-If C<$code> is missing or C<undef>, any existing callback is removed.
-
-This callback will be invoked before one defined on the console object itself,
-if present. If it returns a false value, then the one on the console will be
-invoked instead.
-
-=cut
-
-sub bind_key
-{
-   my $self = shift;
-   my ( $key, $code ) = @_;
-
-   my $console = $self->{console};
-
-   if( not $self->{keybindings}{$key} and $code ) {
-      $console->{keybindings}{$key}[1]++;
-      $console->_update_key_binding( $key );
-   }
-   elsif( $self->{keybindings}{$key} and not $code ) {
-      $console->{keybindings}{$key}[1]--;
-      $console->_update_key_binding( $key );
-   }
-
-   $self->{keybindings}{$key} = $code;
 }
 
 =head1 AUTHOR
